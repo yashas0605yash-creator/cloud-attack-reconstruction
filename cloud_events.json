@@ -1,0 +1,50 @@
+{
+    "events":  [
+                   {
+                       "event_id":  "AWS-001",
+                       "document":  "Multiple failed AWS console login attempts from an unfamiliar IP address.",
+                       "metadata":  {
+                                        "provider":  "AWS",
+                                        "event_type":  "ConsoleLogin",
+                                        "severity":  "HIGH",
+                                        "actor":  "unknown-user"
+                                    }
+                   },
+                   {
+                       "event_id":  "AWS-002",
+                       "document":  "An IAM user received unexpected administrator privileges.",
+                       "metadata":  {
+                                        "provider":  "AWS",
+                                        "event_type":  "IAM Policy Change",
+                                        "severity":  "CRITICAL"
+                                    }
+                   },
+                   {
+                       "event_id":  "AWS-003",
+                       "document":  "An unusual number of objects were downloaded from an S3 bucket.",
+                       "metadata":  {
+                                        "provider":  "AWS",
+                                        "event_type":  "S3 Data Access",
+                                        "severity":  "HIGH"
+                                    }
+                   },
+                   {
+                       "event_id":  "AZURE-001",
+                       "document":  "Several unsuccessful Azure Active Directory authentication attempts occurred.",
+                       "metadata":  {
+                                        "provider":  "Azure",
+                                        "event_type":  "Failed Authentication",
+                                        "severity":  "HIGH"
+                                    }
+                   },
+                   {
+                       "event_id":  "GCP-001",
+                       "document":  "A Google Cloud service account received additional permissions.",
+                       "metadata":  {
+                                        "provider":  "GCP",
+                                        "event_type":  "IAM Permission Change",
+                                        "severity":  "CRITICAL"
+                                    }
+                   }
+               ]
+}

@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cloud Attack Reconstruction</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Cloud Attack Reconstruction</h1>
+    <p>Forensic Analysis System</p>
+  </div>
+  <div id="userArea"></div>
+</header>
+
+<main>
+
+  <!-- Login -->
+  <section id="loginPanel" class="panel">
+    <h2>Sign in</h2>
+    <form id="loginForm">
+      <label>Username
+        <input id="username" required autocomplete="username">
+      </label>
+      <label>Password
+        <input id="password" type="password" required autocomplete="current-password">
+      </label>
+      <button type="submit">Login</button>
+    </form>
+    <p id="loginMessage" class="message"></p>
+  </section>
+
+  <!-- Application -->
+  <section id="appPanel" hidden>
+
+    <!-- Navigation -->
+    <nav>
+      <button data-page="dashboard">Dashboard</button>
+      <button data-page="events">Audit Events</button>
+      <button data-page="search">Semantic Search</button>
+      <button data-page="incidents">Incidents</button>
+      <button data-page="import" id="importNav">Import Dataset</button>
+      <button data-page="users" id="usersNav" hidden>Manage Users</button>
+    </nav>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="page">
+      <h2>Dashboard</h2>
+
+      <div class="metrics">
+        <article>
+          <span>Audit Events</span>
+          <strong id="metricEvents">0</strong>
+        </article>
+        <article>
+          <span>Incidents</span>
+          <strong id="metricIncidents">0</strong>
+        </article>
+        <article>
+          <span>Critical Incidents</span>
+          <strong id="metricCritical">0</strong>
+        </article>
+        <article>
+          <span>Investigation Notes</span>
+          <strong id="metricNotes">0</strong>
+        </article>
+      </div>
+
+      <h3>Recent Audit Events</h3>
+      <div id="recentEvents">
+        <p class="muted">Loading dashboard...</p>
+      </div>
+    </section>
+
+    <!-- Audit Events -->
+    <section id="events" class="page" hidden>
+      <h2>Audit Events</h2>
+      <div id="eventsTable"></div>
+    </section>
+
+    <!-- Semantic Search -->
+    <section id="search" class="page" hidden>
+      <h2>Semantic Event Search</h2>
+      <p>Search cloud audit events using natural-language descriptions.</p>
+
+      <form id="searchForm" class="inlineForm">
+        <input id="searchQuery"
+          type="text"
+          placeholder="Example: suspicious AWS login attempts"
+          minlength="2"
+          maxlength="1000"
+          required>
+
+        <select id="searchLimit">
+          <option value="5" selected>5 results</option>
+          <option value="10">10 results</option>
+          <option value="20">20 results</option>
+        </select>
+
+        <button id="searchButton" type="submit">Search Events</button>
+      </form>
+
+      <p id="searchMessage" class="message" role="status"></p>
+      <div id="searchResults"></div>
+    </section>
+
+    <!-- Incidents -->
+    <section id="incidents" class="page" hidden>
+      <h2>Incidents</h2>
+
+      <form id="incidentForm" class="inlineForm">
+        <input id="incidentTitle" placeholder="Incident title" required>
+
+        <select id="incidentSeverity">
+          <option>LOW</option>
+          <option selected>MEDIUM</option>
+          <option>HIGH</option>
+          <option>CRITICAL</option>
+        </select>
+
+        <input id="incidentDescription" placeholder="Description">
+        <button type="submit">Create incident</button>
+      </form>
+
+      <div id="incidentsTable"></div>
+
+      <h3>Incident Evidence</h3>
+      <label>Incident ID
+        <input id="evidenceIncidentId" type="number" value="1">
+      </label>
+
+      <button id="loadEvidenceButton">Load Evidence</button>
+      <div id="incidentEvidence"></div>
+
+      <h3>Add investigation note</h3>
+      <form id="noteForm" class="inlineForm">
+        <input id="noteIncidentId" type="number" placeholder="Incident ID" required>
+        <input id="noteText" placeholder="Investigation note" required>
+        <button type="submit">Save note</button>
+      </form>
+
+      <p id="incidentMessage" class="message"></p>
+    </section>
+
+    <!-- Import Dataset -->
+    <section id="import" class="page" hidden>
+      <h2>Import approved dataset</h2>
+
+      <p>
+        Choose a JSON file containing an array of genuine audit-event records.
+        Import is restricted to ADMIN users.
+      </p>
+
+      <label>Dataset name
+        <input id="datasetName" placeholder="Approved dataset name">
+      </label>
+
+      <label>JSON file
+        <input id="jsonFile" type="file" accept=".json,application/json">
+      </label>
+
+      <button id="importButton">Import records</button>
+      <p id="importMessage" class="message"></p>
+
+      <h3>Expected normalized fields</h3>
+      <code>event_id, timestamp, provider, actor, source_ip, action, resource, outcome, severity</code>
+    </section>
+
+    <!-- User Management -->
+    <section id="users" class="page" hidden>
+      <h2>User Management</h2>
+
+      <h3>Create New User</h3>
+
+      <form id="userForm" class="inlineForm">
+        <input
+          id="newUsername"
+          placeholder="Username"
+          minlength="3"
+          maxlength="80"
+          required>
+
+        <input
+          id="newPassword"
+          type="password"
+          placeholder="Password (minimum 12 characters)"
+          minlength="12"
+          required>
+
+        <select id="newRole">
+          <option value="ANALYST">Analyst</option>
+          <option value="ADMIN">Admin</option>
+        </select>
+
+        <button type="submit">Create User</button>
+      </form>
+
+      <p id="userMessage" class="message" role="status"></p>
+
+      <h3>Registered Users</h3>
+      <div id="usersTable"></div>
+    </section>
+
+  </section>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>
